@@ -50,9 +50,9 @@ router.get('/search', async (req, res) => {
         let data = await ProgrammeDB.getAllProgramme(query, {}, {pubDate: dateSort}, page, size);
         let count = await ProgrammeDB.getCount(query);
         await sendResponse(async () => ({
-            isLast: page * size >= count,
-            page,
-            size: data.length,
+            page: Number(page),
+            size: Number(size),
+            total: Math.ceil(count / size),
             count: count,
             data: data
         }), res);
