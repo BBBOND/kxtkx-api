@@ -23,6 +23,15 @@ const insertProgrammes = (docs) => {
     });
 };
 
+const getProgramme = (query) => {
+    return new Promise(async (resolve, reject) => {
+        Programme.findOne(query, (err, result) => {
+            err && reject(err);
+            resolve(result);
+        });
+    });
+};
+
 const getAllProgramme = (query, projection, sort, page = 1, size = 10) => {
     return new Promise(async (resolve, reject) => {
         Programme
@@ -52,5 +61,6 @@ module.exports = {
     insertProgramme,
     insertProgrammes,
     getAllProgramme,
+    getProgramme,
     getCount,
 };

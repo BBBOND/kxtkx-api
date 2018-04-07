@@ -63,6 +63,26 @@ router.get('/search', async (req, res) => {
     res.end();
 });
 
+router.get('/programme', async (req, res) => {
+    debug(req.method, req.url, moment().format('YYYY-MM-DD HH:mm:ss:SS'));
+    let {id} = req.query;
+    try {
+        if (id) {
+            let data = await ProgrammeDB.getProgramme({_id: id});
+            if (data) {
+                await sendResponse(data, res);
+            } else {
+                await sendResponse({code: 404, msg: "无此节目"}, res);
+            }
+        } else {
+            await sendResponse({code: 500, msg: "未知id"}, res);
+        }
+    } catch (e) {
+        debug('e: ', e.message);
+        await sendResponse({code: 500, msg: e.message}, res);
+    }
+});
+
 /**
  * 按条件获取数量
  */
